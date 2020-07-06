@@ -2,8 +2,13 @@
 SWEP.Author = "Zaratusa"
 SWEP.Contact = "http://steamcommunity.com/profiles/76561198032479768"
 
-CreateConVar("ttt_sandwich_detective", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should Detectives be able to use the Sandwich?")
-CreateConVar("ttt_sandwich_traitor", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should Traitors be able to use the Sandwich?")
+local detectiveEnabled = CreateConVar("ttt_sandwich_detective", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should Detectives be able to use the Sandwich?", 0, 1)
+local traitorEnabled = CreateConVar("ttt_sandwich_traitor", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should Traitors be able to use the Sandwich?", 0, 1)
+
+local defaultClipSize = CreateConVar("ttt_sandwich_bought", 4, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Amount of sandwiches you receive, when you buy a Sandwich.", 1)
+local clipSize = CreateConVar("ttt_sandwich_max", 4, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Maximum amount of sandwiches you can carry.", 1)
+
+local healAmount = CreateConVar("ttt_sandwich_heal_amount", 25, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Amount of health being restored upon consumption.", 1)
 
 if SERVER then
 	AddCSLuaFile()
@@ -44,10 +49,10 @@ SWEP.Base = "weapon_tttbase"
 SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 2
 SWEP.Primary.Automatic = false
-SWEP.Primary.ClipSize = 4
-SWEP.Primary.DefaultClip = 4
+SWEP.Primary.DefaultClip = defaultClipSize:GetInt()
+SWEP.Primary.ClipSize = clipSize:GetInt()
 
-SWEP.HealAmount = 25
+SWEP.HealAmount = healAmount:GetInt()
 
 --[[Model settings]]--
 SWEP.HoldType = "slam"
@@ -72,10 +77,10 @@ SWEP.AmmoEnt = "none"
 -- a role is in this table, those players can buy this.
 SWEP.CanBuy = {}
 
-if (GetConVar("ttt_sandwich_detective"):GetBool()) then
+if (detectiveEnabled:GetBool()) then
 	table.insert(SWEP.CanBuy, ROLE_DETECTIVE)
 end
-if (GetConVar("ttt_sandwich_traitor"):GetBool()) then
+if (traitorEnabled:GetBool()) then
 	table.insert(SWEP.CanBuy, ROLE_TRAITOR)
 end
 
