@@ -7,6 +7,7 @@ local traitorEnabled = CreateConVar("ttt_sandwich_traitor", 1, {FCVAR_SERVER_CAN
 
 local defaultClipSize = CreateConVar("ttt_sandwich_bought", 4, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Amount of sandwiches you receive, when you buy a Sandwich.", 1)
 local clipSize = CreateConVar("ttt_sandwich_max", 4, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Maximum amount of sandwiches you can carry.", 1)
+local hasLimitedStock = CreateConVar("ttt_sandwich_limited_stock", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Can you buy the Sandwich only once per round?", 0, 1)
 
 local healAmount = CreateConVar("ttt_sandwich_heal_amount", 25, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Amount of health being restored upon consumption.", 1)
 
@@ -85,7 +86,7 @@ if (traitorEnabled:GetBool()) then
 end
 
 -- If LimitedStock is true, you can only buy one per round.
-SWEP.LimitedStock = true
+SWEP.LimitedStock = hasLimitedStock:GetBool()
 
 -- If AllowDrop is false, players can't manually drop the gun with Q
 SWEP.AllowDrop = true
