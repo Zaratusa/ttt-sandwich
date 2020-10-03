@@ -17,6 +17,9 @@ if SERVER then
 else
 	LANG.AddToLanguage("english", "sandwich_name", "Sandwich")
 	LANG.AddToLanguage("english", "sandwich_desc", "Have a snack\nand heal yourself or others.\nBe careful when you throw it\non the ground, it can spoil.")
+	
+	LANG.AddToLanguage("Русский", "sandwich_name", "Бутерброд")
+	LANG.AddToLanguage("Русский", "sandwich_desc", "Перекусите\nи исцелите себя или других.\nБудьте осторожны, когда бросаете это\nна землю, оно может испортиться.")
 
 	SWEP.PrintName = "sandwich_name"
 	SWEP.Slot = 7
